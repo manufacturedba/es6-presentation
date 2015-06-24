@@ -1,0 +1,19 @@
+{
+  "name": "q-class",
+  "version": "1.0.0",
+  "description": "Slideshow presentation on Q Promise library and other promise good stuff",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com/manufacturedba/q-class"
+  },
+  "author": "Roberto Rodriguez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/manufacturedba/q-class/issues"
+  },
+  "homepage": "https://github.com/manufacturedba/q-class"
+}
