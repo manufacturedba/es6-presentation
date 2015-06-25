@@ -14,13 +14,11 @@ html
                 section
                     section
                         h2 Q Promises           
-                section
-                    h3 What are they?           
-                    div(class="fragment") Promises are a way of deferring computations until it is convenient      
-                    div(class="fragment")
-                    | Promises are a way of constructing
-                    | callbacks in a readable way              
-                    div(class="fragment").fragment Promises are throw safe       
+                    section
+                        h3 What are they?           
+                        div(class="fragment") Promises are a way of deferring computations until it is convenient      
+                        div(class="fragment") Promises are a way of constructing callbacks in a readable way
+                        div(class="fragment") Promises are throw safe       
                 section
                   section
                     h3 What do they look like?
@@ -47,11 +45,12 @@ html
             Reveal.initialize({
                 multiplex: {
                     // Example values. To generate your own, see the socket.io server instructions.
-                    secret: '14352449158586590545', // Obtained from the socket.io server. Gives this (the master) control of the presentation
-                    id: '755f043462eee7c9', // Obtained from socket.io server
-                    url: 'localhost:8000' // Location of socket.io server
+                    secret: '14352599511678080493', // Obtained from the socket.io server. Gives this (the master) control of the presentation
+                    id: '7f3f29c9ad6d56fc', // Obtained from socket.io server
+                    url: 'al-robertor-l01:8000' // Location of socket.io server
                 },
                 controls: true,
+                touch: true,
                 progress: true,
                 history: true,
                 center: true,
@@ -75,6 +74,10 @@ html
                     },
                     {
                         src: '/bower_components/reveal.js/plugin/highlight/highlight.js',
+                        async: true
+                    },
+                                        {
+                        src: '/bower_components/reveal.js/plugin/notes-server/client.js',
                         async: true
                     }
                 ]

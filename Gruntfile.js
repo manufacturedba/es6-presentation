@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         watch: {
-            files: ['index.html'],
+            files: ['views/**/*.jade'],
             options: {
                 livereload: true
             }
