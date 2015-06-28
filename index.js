@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname)));
 
 app.use('/', express.Router()
     .get('/master', function(req, res, next){
-        res.render('index');
+        res.render('master');
     })
     .get('/', function(req, res, next){
         res.render('client');
@@ -50,15 +50,16 @@ io.sockets.on( 'connection', function( socket ) {
     });
 
     socket.on('slidechanged', function(slideData) {
-        if (typeof slideData.secret == 'undefined' || slideData.secret == null || slideData.secret === '') return;
+        if (typeof slideData.secret == 'undefined' || slideData.secret === undefined || slideData.secret === '') return;
         if (createHash(slideData.secret) === slideData.socketId) {
             slideData.secret = null;
             socket.broadcast.emit(slideData.socketId, slideData);
-        };
+        }
     });
 });
 
 server.listen(port);
+console.log('Server listening at ' + port);
 
 function normalizePort(val) {
     var port = parseInt(val, 10);
@@ -79,4 +80,4 @@ function normalizePort(val) {
 function createHash(secret) {
     var cipher = crypto.createCipher('blowfish', secret);
     return(cipher.final('hex'));
-};
+}
