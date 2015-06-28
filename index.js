@@ -22,6 +22,11 @@ app.use('/', express.Router()
     .get('/', function(req, res, next){
         res.render('client');
     })
+    .get('/plugin/markdown/marked.js', function(req, res, next){
+        fs.readFile(path.join(__dirname, 'bower_components/reveal.js/plugin/markdown/marked.js'), function( err, data ) {
+            res.send(data);
+        });
+    })
     .get( '/notes/:socketId', function( req, res ) {
         fs.readFile(path.join(__dirname, 'bower_components/reveal.js/plugin/notes-server/notes.html'), function( err, data ) {
             res.send(mustache.to_html( data.toString(), {
