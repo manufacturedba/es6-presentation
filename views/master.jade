@@ -7,7 +7,7 @@ block script
         Reveal.initialize({
             multiplex: {
                 // Example values. To generate your own, see the socket.io server instructions.
-                secret: null, // Obtained from the socket.io server. Gives this (the master) control of the presentation
+                secret: '14352599511678080493', // Obtained from the socket.io server. Gives this (the master) control of the presentation
                 id: '7f3f29c9ad6d56fc', // Obtained from socket.io server
                 url: 'al-robertor-l01:8000' // Location of socket.io server
             },
@@ -31,7 +31,15 @@ block script
                     async: true
                 },
                 {
-                    src: '/bower_components/reveal.js/plugin/multiplex/client.js',
+                    src: '/bower_components/reveal.js/plugin/multiplex/master.js',
+                    async: true
+                },
+                {
+                    src: '/bower_components/reveal.js/plugin/highlight/highlight.js',
+                    async: true
+                },
+                                    {
+                    src: '/bower_components/reveal.js/plugin/notes-server/client.js',
                     async: true
                 }
             ]

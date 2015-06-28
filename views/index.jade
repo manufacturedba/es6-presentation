@@ -2,83 +2,60 @@ doctype html
 html
     head
         title Q Promises
-        meta(charset='utf-8')   
-        meta(name='author', content='Roberto Rodriguez')   
-        meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui')   
-        link(rel='stylesheet', type='text/css', href='/bower_components/reveal.js/css/reveal.css')  
-        link(rel='stylesheet', href='/bower_components/reveal.js/lib/css/zenburn.css')  
+        meta(charset='utf-8')
+        meta(name='author', content='Roberto Rodriguez')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui')
+        link(rel='stylesheet', type='text/css', href='/bower_components/reveal.js/css/reveal.css')
+        link(rel='stylesheet', href='/bower_components/reveal.js/lib/css/zenburn.css')
         link(rel='stylesheet', href='/bower_components/reveal.js/css/theme/blood.css')
     body
         div(class="reveal")
             div(class="slides")
                 section
-                    section
-                        h2 Q Promises           
-                    section
-                        h3 What are they?           
-                        div(class="fragment") Promises are a way of deferring computations until it is convenient      
-                        div(class="fragment") Promises are a way of constructing callbacks in a readable way
-                        div(class="fragment") Promises are throw safe       
+                    h4 Q Promises
                 section
-                  section
-                    h3 What do they look like?
-                    pre
-                        code(data-trim).
-                            var promise = Q.fcall(function () {
-                                var result = 'spam';
-                                return result;
-                            });
-
-                            promise.then(function (result) {
-                                console.log(result === 'spam');
-                            });
-
-                            true
-                section Vertical Slide 2
+                    div What are they?
+                section
+                    section
+                        div Promises are a way of deferring computations until it is convenient
+                        div(class="codeBlock")
+                            pre(class="fragment")
+                                code.
+                                    startWasher().then(function(cleanClothes){
+                                        log.info('Done cleaning');
+                                    });
+                                    
+                                    doSomethingElse();
+                                    log.info('Done something');
+                                    
+                                    Done something
+                                    Done boxing
+                    section
+                        div Promises are a way of constructing callbacks in a readable way
+                            pre(class="fragment")
+                                code.
+                                    firstStep()
+                                    .then(secondStep)
+                                    .then(thirdStep)
+                                    .then(function(result) {
+                                        log.debug('Result from third step is ' + result);
+                                    });
+                    section
+                        div Promises are throw safe
+                            pre(class="fragment")
+                                code.
+                                    doSomething()
+                                    .then(function alwaysFail() {
+                                        throw(new Error('I failed'));
+                                    })
+                                    .then(doSomethingElse)
+                                    .fail(function(err) {
+                                        log.error(err);
+                                    });
+                section
+                    
         script(type='text/javascript', src='/bower_components/reveal.js/lib/js/head.min.js')
         script(type='text/javascript', src='/bower_components/reveal.js/js/reveal.js')
         script(type='text/javascript', src='/bower_components/reveal.js/plugin/highlight/highlight.js')
         script(type='text/javascript', src='/bower_components/reveal.js/plugin/zoom-js/zoom.js')
-        script.
-            // Full list of configuration options available at:
-            // https://github.com/hakimel/reveal.js#configuration
-            Reveal.initialize({
-                multiplex: {
-                    // Example values. To generate your own, see the socket.io server instructions.
-                    secret: '14352599511678080493', // Obtained from the socket.io server. Gives this (the master) control of the presentation
-                    id: '7f3f29c9ad6d56fc', // Obtained from socket.io server
-                    url: 'al-robertor-l01:8000' // Location of socket.io server
-                },
-                controls: true,
-                touch: true,
-                progress: true,
-                history: true,
-                center: true,
-                transition: 'slide', // none/fade/slide/convex/concave/zoom
-                // Optional reveal.js plugins
-                dependencies: [
-                    {
-                        src: '/bower_components/reveal.js/plugin/highlight/highlight.js',
-                        async: true,
-                        callback: function() {
-                            hljs.initHighlightingOnLoad();
-                        }
-                    },
-                    {
-                        src: 'socket.io/socket.io.js',
-                        async: true
-                    },
-                    { 
-                        src: '/bower_components/reveal.js/plugin/multiplex/master.js', 
-                        async: true 
-                    },
-                    {
-                        src: '/bower_components/reveal.js/plugin/highlight/highlight.js',
-                        async: true
-                    },
-                                        {
-                        src: '/bower_components/reveal.js/plugin/notes-server/client.js',
-                        async: true
-                    }
-                ]
-            });
+        block script
