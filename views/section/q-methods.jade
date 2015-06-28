@@ -1,2 +1,104 @@
 section
-    div Methods for constructing promises
+    div Methods for Constructing Promises
+section
+    strong Q.fcall
+    section
+        div. 
+            Q.fcall is the simplest way to turn any function into a thenable.
+    section(data-transition="slide-in fade-out")
+        div.
+            Turn this
+        pre
+            code.
+                function addNumbers(a, b) {
+                    return a + b;
+                }
+                
+                console.log(addNumbers(2, 2));
+                console.log('Blocked');
+                
+                Blocked
+                4
+    section(data-transition="fade-in")
+        div Into this
+        pre
+            code.
+                function addNumbers(a, b) {
+                    return Q.fcall(function(){
+                        return a + b;
+                    });
+                }
+                
+                addNumbers(2, 2).then(console.log);
+                console.log('Not blocked');
+                
+                Not blocked
+                4
+section
+    strong Q.Promise or Deferred
+    section
+        div.
+            Q.Promise allows us to resolve, reject, or report progress
+    section(data-transition="slide-in fade-out")
+        pre
+            code.
+                function process(items) {
+                    
+                    return Q.Promise(function (resolve, reject, notify) {
+                        
+                        for (var i = 0, j = items; i < j.length; i++) {
+                            if (j[i].type === 'error') {
+                                reject('Encountered error');
+                            } else {
+                                j[i].processed = true;
+                                notify((i + 1)/j.length);
+                            }
+                        }
+                        
+                        resolve(statuses);
+                    });
+                }
+    section(data-transition="fade-in slide-out")
+        pre
+            code.
+                process(tickets)
+                    .then(function (result) {
+                        log.info('Done processing tickets');
+                    })
+                    .fail(function (err) {
+                        log.error(err);
+                    })
+                    .progress(function (progress) {
+                        log.debug(Math.round(progress * 100) + "%");
+                    });
+    section
+        div.
+            Deferred constructed promises are much more suited to handling 
+            non-promise returning asynchronous functions
+    section
+        pre
+            code.
+                function handleRequest () {
+                    
+                    var deferred = Q.defer();
+                    
+                    http.get('/information', function (response) {
+                        
+                        response.on('data', deferred.resolve);
+                        
+                        response.on('error', deferred.reject);
+                        
+                    });
+                    
+                    return deferred.promise;
+                }
+        aside(class="notes").
+            Hello
+section
+    strong Q.all and spread
+    section 
+        div. 
+            In some instances, we would like to handle multiple promises at once
+section
+    strong Q.nfcall or Q.denodeify
+section Promise chaining
