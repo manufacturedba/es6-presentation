@@ -1,0 +1,44 @@
+section
+    div States and Fates of Promises
+section
+    section
+        div Promises have three mutually exclusive states
+    section
+        h5 Fulfilled
+        div(class="fragment") A promise is said to be <i>fulfilled</i> if 
+        pre(class="fragment")
+            code.
+                promise.then(fn) 
+        div(class="fragment") will call <i>fn</i> when possible.
+        div(class="fragment").
+            A promise can only be fulfilled once
+    section
+        h5 Rejected
+        div(class="fragment") A promise is said to be <i>rejected</i> if
+        pre(class="fragment")
+            code.
+                promise.fail(fn)
+        div(class="fragment") will call <i>fn</i> when possible.
+        div(class="fragment") <strong>Optionally use </strong><pre><code>promise.then(undefined, fn)</code></pre><strong> instead</strong>
+    section
+        h5 Pending
+        div(class="fragment") A promise that is <i>pending</i> is a promise that has yet to be fufilled or rejected.
+section 
+    section
+        div Promises have two mutually exclusive fates
+    section
+        h5 Resolved
+        div(class="fragment"). 
+            A promise is said to be <i>resolved</i> if it has been <i>fulfilled</i>
+            or <i>rejected</i>.
+        div(class="fragment").
+            A promise once <i>resolved</i> cannot become <i>unresolved</i>.
+    section
+        h5 Unresolved
+        div(class="fragment").
+            A promise is said to be <i>unresolved</i> if it is not <i>resolved</i>.
+        div(class="fragment").
+            Attempting to resolve or reject an <i>unresolved</i> promise will change
+            the promise to be <i>resolved</i>.
+    section
+        div An <i>unresolved</i> promise by definition is also <i>pending</i>.

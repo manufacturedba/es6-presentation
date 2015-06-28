@@ -1,0 +1,41 @@
+section
+    h4 Q Promises
+section
+    div What are they?
+section
+    section
+        div Promises are a way of deferring computations until it is convenient
+        div(class="codeBlock")
+            pre(class="fragment")
+                code.
+                    startWasher().then(function(cleanClothes){
+                        log.info('Done cleaning');
+                    });
+                    
+                    doSomethingElse();
+                    log.info('Done something');
+                    
+                    Done something
+                    Done boxing
+    section
+        div Promises are a way of constructing callbacks in a readable way
+            pre(class="fragment")
+                code.
+                    firstStep()
+                    .then(secondStep)
+                    .then(thirdStep)
+                    .then(function(result) {
+                        log.debug('Result from third step is ' + result);
+                    });
+    section
+        div Promises are throw safe
+            pre(class="fragment")
+                code.
+                    doSomething()
+                    .then(function alwaysFail() {
+                        throw(new Error('I failed'));
+                    })
+                    .then(doSomethingElse)
+                    .fail(function(err) {
+                        log.error(err);
+                    });
