@@ -217,7 +217,7 @@ section
                     turnOffLights()
                     .then(function (finished) {
                         
-                        if (filled && finished) {
+                        if ((filled && finished) === true) {
                             leaveHouse();
                         }
                         

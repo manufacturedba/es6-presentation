@@ -1,24 +1,43 @@
 section
-    h4 Q Promises
+    h4 Promises
+    aside(class="notes").
+        Today we'll be looking at Promises; specifically, the Q library.  
+        Other implementations include the Bluebird promise library which more 
+        closely resembles the ES6 implementation of promises and $q service 
+        which is Angular's implementation of promises.
 section
     div What are they?
+    aside(class="notes").
+        JavaScript is single-threaded.  Operations must run in order of each other. 
+        In Node we deal with this using "node-style" "error-first" callbacks.  And 
+        that's been completely satisfactory until now.  Nesting multiple callbacks 
+        can lead into a situation called "callback hell" whereby our code moves 
+        further right than forward.  So how do we deal with this situation in a way that's
+        readable, containable, and debuggable.
 section
     section
         div Promises are a way of deferring computations until it is convenient
         div(class="codeBlock")
             pre(class="fragment")
                 code.
-                    startWasher().then(function(cleanClothes){
-                        log.info('Done cleaning');
+                    doSomething().then(function(result){
+                        log.info('Done something');
                     });
                     
                     doSomethingElse();
-                    log.info('Done something');
+                    log.info('Done something else');
                     
+                    Done something else
                     Done something
-                    Done boxing
+        aside(class="notes").
+            Ususally this is handled by some event loop where operations are queued 
+            to be handled at a later point.  Typically, this on the next tick.  
+            In this example, we assume doSomething is an asynchronous function.  
+            It may make a call out to some server or perform some operation on 
+            a file ex. read, write, etc.  We pass .then a callback to be executed 
+            once doSomething has completed.
     section
-        div Promises are a way of constructing callbacks in a readable way
+        div Promises are a way of building asynchronous operations in a readable way
             pre(class="fragment")
                 code.
                     firstStep()
@@ -27,15 +46,37 @@ section
                     .then(function(result) {
                         log.debug('Result from third step is ' + result);
                     });
+        aside(class="notes").
+            Promise chains, which I'll elaborate on later, allows us to create an 
+            asynchronous sequence of operations.  Functions in the chain itself may 
+            not necessarily be asynchronous, but by using them with the Q library 
+            their execution is delayed for free.
     section
         div Promises are throw safe
-            pre(class="fragment")
+            pre(class="fragment fade-out")
+                code.
+                    var result;
+                    try {
+                        result = doSomethingSync();
+                    } catch(err) {
+                        log.error(err); // Continue on
+                    }
+                    
+                    if (result) {
+                        doSomethingElse();
+                    }
+                    
+            pre(class="fragment fade-in")
                 code.
                     doSomething()
-                    .then(function alwaysFail() {
-                        throw(new Error('I failed'));
-                    })
                     .then(doSomethingElse)
                     .fail(function(err) {
                         log.error(err);
                     });
+        aside(class="notes").
+            Previous to discovering promises I may have been tempted to write something
+            like this.
+            Promises have two ways to become rejected.  We can either reject them 
+            ourselves or they will reject themselves when encountering an error.  
+            We only need to provide a single rejection handler to catch any errors  
+            though we can provide each step its own rejection handler.
