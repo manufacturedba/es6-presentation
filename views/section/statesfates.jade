@@ -3,42 +3,62 @@ section
 section
     section
         div Promises have three mutually exclusive states
+section
+    h5 Fulfilled
     section
-        h5 Fulfilled
         div(class="fragment") A promise is said to be <i>fulfilled</i> if 
         pre(class="fragment")
             code.
                 promise.then(fn) 
         div(class="fragment") will call <i>fn</i> when possible.
         div(class="fragment").
-            A promise can only be fulfilled once
+            A promise can be <i>fulfilled</i> multiple times, but its fulfillment
+            value cannot be changed.
+        pre(class="fragment")
+            code.
+                var deferred = Q.defer();
+                deferred.resolve(1);
+                deferred.resolve(2);
+                
+                deferred.promise.then(function (result) {
+                    console.log(result === 1);
+                })
+                
+                true
+    aside(class="notes").
+        Fulfilled
+section
+    h5 Rejected
     section
-        h5 Rejected
         div(class="fragment") A promise is said to be <i>rejected</i> if
         pre(class="fragment")
             code.
                 promise.fail(fn)
         div(class="fragment") will call <i>fn</i> when possible.
         div(class="fragment") <strong>Optionally use </strong><pre><code>promise.then(undefined, fn)</code></pre><strong> instead</strong>
+section
+    h5 Pending
     section
-        h5 Pending
-        div(class="fragment") A promise that is <i>pending</i> is a promise that has yet to be fufilled or rejected.
+        div(class="fragment"). 
+            A promise that is <i>pending</i> is a promise that has yet to be <i>fufilled</i> or <i>rejected</i>.
 section 
     section
         div Promises have two mutually exclusive fates
+section
+    h5 Resolved
     section
-        h5 Resolved
         div(class="fragment"). 
             A promise is said to be <i>resolved</i> if it has been <i>fulfilled</i>
             or <i>rejected</i>.
         div(class="fragment").
             A promise once <i>resolved</i> cannot become <i>unresolved</i>.
+section
+    h5 Unresolved
     section
-        h5 Unresolved
         div(class="fragment").
             A promise is said to be <i>unresolved</i> if it is not <i>resolved</i>.
         div(class="fragment").
             Attempting to resolve or reject an <i>unresolved</i> promise will change
             the promise to be <i>resolved</i>.
-    section
-        div An <i>unresolved</i> promise by definition is also <i>pending</i>.
+section
+    div An <i>unresolved</i> promise by definition is also <i>pending</i>.
