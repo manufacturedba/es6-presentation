@@ -5,6 +5,9 @@ section
     section
         div. 
             Q.fcall is the simplest way to turn any function into a thenable.
+    aside(class="notes").
+        A thenable promise is a promise with a method of "then" which is used to retrieve the fulfillment or rejection value of a
+        resolved promise.
     section(data-transition="slide-in fade-out")
         div.
             Turn this
@@ -17,9 +20,11 @@ section
                 console.log(addNumbers(2, 2));
                 console.log('Blocked');
                 
-                Blocked
                 4
-    section(data-transition="fade-in")
+                Blocked
+        aside(class="notes").
+            The benefit of the Node platform model is most everything is asynchronous with exception to methods with Sync in its name such as readFileSync instead of the asynchronous version readFile.  When creating new modules resembling Node's API we don't get asynchronous for free.
+    section(data-transition="fade-in slide-out")
         div Into this
         pre
             code.
@@ -34,6 +39,8 @@ section
                 
                 Not blocked
                 4
+        aside(class="notes").
+            When using the Q library we can use Q.fcall to easily create a fulfilled promise by returning any value.  If any exceptions are thrown, Q.fcall will capture them and hand us back a rejected promise, but we'll have no control over the rejection error.
 section
     strong Q.Promise or Deferred
     section
