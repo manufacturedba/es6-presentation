@@ -1,5 +1,6 @@
 section
     h4 Promises
+    a(href="http://al-cphilpot-d02:8000") http://al-cphilpot-d02:8000
     aside(class="notes").
         Today we'll be looking at Promises; specifically, the Q promise library.  
         Other implementations include the Bluebird promise library which more 
@@ -9,8 +10,8 @@ section
     section
         div What are they?
         aside(class="notes").
-            So before I even explain what a Promise is I need to explain their necessity.  JavaScript both in Node and the browser is single-threaded. Typically rendering, handling of user actions, and style updates are all shared by a one thread.  If there was any such an engine that didn't account for this, we'd be unable to deal with multiple user requests.
-            Node handles async via "error-first" callbacks.
+            So before I even explain what a Promise is I need to explain their necessity.  As we should all know JavaScript both in Node and the browser is single-threaded. So typically rendering, handling of user actions such as button clicks or dragging or most anything in general along with style updates are all shared by one thread.  So everything in one shape or form is going to be blocking.  However in the JavaScript world because we aren't able to run multiple scripts in parallel we use the continuation passing style in the form of callbacks. 
+            Node has its own style of callbacks called "error-first" callbacks where the error is the value passed to our callback.
     section
         pre
             code.
