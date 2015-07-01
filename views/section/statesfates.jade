@@ -1,8 +1,12 @@
 section
     div States and Fates of Promises
+    aside(class="notes").
+        Without initially understanding the terminology surrounding promises I wasn't able to fully grasp their usage, so hopefully this will explain how they work the way they do.
 section
     section
         div Promises have three mutually exclusive states
+    aside(class="notes").
+        Promises are in charge of keeping track of their own internal state.
 section
     h5 Fulfilled
     section
@@ -26,7 +30,11 @@ section
                 
                 true
     aside(class="notes").
-        Fulfilled 
+        A promise is said to be fulfilled if the callback or fulfillment handler passed to it will be called on the next cycle of the event loop or as the specification puts it, "when possible".  The specification doesn't dictate when exactly the execution of a callback (fn) will happen, but encourages it to happen at an expected event or in this case once the callstack empties.
+
+        The other important thing to note here is we can fulfill a promise multiple times if we need its fulfillment value at different points, but the promise has a fulfillment value that can never change.
+
+        So in here our Promise's fulfillment value becomes 1 and stays one even in the event of it being resolved again.
 section
     h5 Rejected
     section
@@ -36,14 +44,30 @@ section
                 promise.fail(fn)
         div(class="fragment") will call <i>fn</i> when possible.
         div(class="fragment") <strong>Optionally use </strong><pre><code>promise.then(undefined, fn)</code></pre><strong> instead</strong>
+    aside(class="notes").
+        A promise is said to be rejected if its rejection handler will be called on the next event loop cycle. A rejected promise simply means a promise that either failed to be resolved as part of an error or was rejected as part of its code.
 section
     h5 Pending
     section
         div(class="fragment"). 
             A promise that is <i>pending</i> is a promise that has yet to be <i>fufilled</i> or <i>rejected</i>.
+        pre(class="fragment")
+            code.
+                function doNothing () {
+                    var deferred = Q.defer();
+                    return deferred.promise
+                }
+
+                doNothing.then(function () {
+                    // will never execute
+                });
+    aside(class="notes").
+        A pending promise doesn't necessarily mean a promise in limbo as in this example.  It can just mean a promise that's awaiting to be fulfilled or rejected.  It could be waiting on some server response.  Typically Q is good about letting you know about unhandled promises when shutting down a Node process.
 section 
     section
         div Promises have two mutually exclusive fates
+    aside(class="notes").
+        Fates differ in that they give no indication to their resolution, but only that they were handled by the function that spawned its creation.
 section
     h5 Resolved
     section
@@ -52,6 +76,8 @@ section
             or <i>rejected</i>.
         div(class="fragment").
             A promise once <i>resolved</i> cannot become <i>unresolved</i>.
+    aside(class="notes").
+        This is what makes promises fundamentally different than event listeners and watchers.  We only care about the value of a resolved promise once as opposed to depending on it at later points and having to handle tear downs.  When attempting to resolve or reject a promise subsequent times, we have no impact on its value.
 section
     h5 Unresolved
     section
@@ -62,3 +88,5 @@ section
             the promise to be <i>resolved</i>.
 section
     div An <i>unresolved</i> promise by definition is also <i>pending</i>.
+    aside(class="notes").
+        An unresolved promise is pending by necessity.

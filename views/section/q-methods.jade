@@ -4,13 +4,10 @@ section
     strong Q.fcall
     section
         div. 
-            Q.fcall is the simplest way to turn any function into a thenable.
+            Q.fcall is the simplest way to turn any function into a "then-able".
     aside(class="notes").
-        A thenable promise is a promise with a method of "then" which is used to retrieve the fulfillment or rejection value of a
-        resolved promise.
+        A thenable promise is a promise with a method of "then" which is used to retrieve the fulfillment or rejection value of a resolved promise.
     section(data-transition="slide-in fade-out")
-        div.
-            Turn this
         pre
             code.
                 function addNumbers(a, b) {
@@ -23,9 +20,12 @@ section
                 4
                 Blocked
         aside(class="notes").
-            The benefit of the Node platform model is most everything is asynchronous with exception to methods with Sync in its name such as readFileSync instead of the asynchronous version readFile.  When creating new modules resembling Node's API we don't get asynchronous for free.
+            The benefit of the Node platform model is everything that should be asynchronous is asynchronous with exception to methods with Sync in its name such as readFileSync instead of the asynchronous version readFile.  However when we're creating new modules resembling Node's API we don't get the "error-first" asynchronous callback style for free.  We have to build it using .nextTick() to indicate it should be passed along to the event loop.
+
+            So when building simple functions like this we're immediately blocking.  We can pretend that a function more or less represents a CPU intensive operation where we'd prefer to delay its execution until later.
+
+            What does a simple function look like?
     section(data-transition="fade-in slide-out")
-        div Into this
         pre
             code.
                 function addNumbers(a, b) {
@@ -40,12 +40,14 @@ section
                 Not blocked
                 4
         aside(class="notes").
-            When using the Q library we can use Q.fcall to easily create a fulfilled promise by returning any value.  If any exceptions are thrown, Q.fcall will capture them and hand us back a rejected promise, but we'll have no control over the rejection error.
+            Here's the example modified with Q.  When using the Q library we can use the helper function Q.fcall to easily construct a fulfilled promise out of any returned value.  If any exceptions are thrown, Q.fcall will capture them and hand us back a rejected promise, but we'll have no control over the rejection error itself.
 section
     strong Q.Promise or Deferred
     section
         div.
             Q.Promise allows us to resolve, reject, or report progress
+        aside(class="notes").
+            Q.Promise is the purest form of Promises.  It exactly resembles what Promises will look like in ES6, but they're not always appropriate for the job.  The truth is we don't exactly have access to this with our current version of Q, but I'll show how we can still achieve it.
     section(data-transition="slide-in fade-out")
         pre
             code.
@@ -65,6 +67,8 @@ section
                         resolve(statuses);
                     });
                 }
+        aside(class="notes").
+            So in this example Q.Promise takes a callback function as usual, but we have the ability to resolve, reject, and/or notify the user when something has updated.  This is extremely useful for file uploads.
     section(data-transition="fade-in slide-out")
         pre
             code.
@@ -78,10 +82,14 @@ section
                     .progress(function (progress) {
                         log.debug(Math.round(progress * 100) + "%");
                     });
+        aside(class="notes").
+            Handling this promise remains the same as any other.  We have a .then, a .fail to capture any propogating errors or rejections, but we now .progress.  This is not part of the Promise specification by any means, but it's extra sugar on top of the standard promise.
     section
         div.
             Deferred constructed promises are much more suited to handling 
             non-promise returning asynchronous functions
+        aside(class="notes").
+            An example being Node-style callback functions.  We use this extensively in Angular as $q.defer();
     section
         pre
             code.
@@ -100,16 +108,16 @@ section
                     return deferred.promise;
                 }
         aside(class="notes").
-            Hello
+            In this example, we're blending promises with event listeners as you might have to do when using the HTTP Node module.
 section
     strong Q.all and spread
     section 
         div. 
-            In some instances, we would like to fulfill multiple promises at once. 
+            In some instances, we would like to fulfill multiple promises at once.
         aside(class="notes").    
-            We can give Q.all an array of values (or promises) that when fulfilled
-            will give an array of the fulfillment values of the passed promises.
-            Q.all will also maintain the order in which promises are passed to it.
+            Because of the flexibility of Promises we can give Q.all an array of values (and/or promises) that when all of them are fulfilled
+            will give pass an array of the fulfillment values of the passed promises.
+            Q.all also has no problem maintaining the order in which promises are passed to it.  We're safe to use it in combination with functions that accept multiple 
     section
         pre
             code.
@@ -131,6 +139,8 @@ section
         div.
             .spread allows us to use functions that take multiple arguments as our
             fulfillment handler in place of .then.
+        aside(class="notes").
+            .spread is essentially .then, but with our callback being called with apply.
     section
         pre
             code.
@@ -146,6 +156,8 @@ section
                 
                 Q.all([createOrder(info), email(address), createLabel(info)])
                     .spread(updateOrder);
+        aside(class="notes").
+            Calling Q.all within a chain is not necessary however.  If you return an array of promises or values, the Q library will immediately call Q.all as part of the inbetween of that step.
 section
     strong Q.nfcall or Q.denodeify
     section
