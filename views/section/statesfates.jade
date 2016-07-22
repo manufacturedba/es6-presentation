@@ -20,11 +20,11 @@ section
             value cannot be changed.
         pre(class="fragment")
             code.
-                var deferred = Q.defer();
+                var deferred = new Promise();
                 deferred.resolve(1);
                 deferred.resolve(2);
                 
-                deferred.promise.then(function (result) {
+                deferred.then(function (result) {
                     console.log(result === 1);
                 })
                 
@@ -41,21 +41,21 @@ section
         div(class="fragment") A promise is said to be <i>rejected</i> if
         pre(class="fragment")
             code.
-                promise.fail(fn)
+                promise.catch(fn)
         div(class="fragment") will call <i>fn</i> when possible.
-        div(class="fragment") <strong>Optionally use </strong><pre><code>promise.then(undefined, fn)</code></pre><strong> instead</strong>
+        div(class="fragment") <strong>Optionally use </strong><pre><code>promise.then(undefined, fn)</code></pre>
     aside(class="notes").
         A promise is said to be rejected if its rejection handler will be called on the next event loop cycle. A rejected promise simply means a promise that either failed to be resolved as part of an error or was rejected as part of its code.
 section
     h5 Pending
     section
         div(class="fragment"). 
-            A promise that is <i>pending</i> is a promise that has yet to be <i>fufilled</i> or <i>rejected</i>.
+            A promise that is <i>pending</i> is a promise that has yet to be <i>fulfilled</i> or <i>rejected</i>.
         pre(class="fragment")
             code.
                 function doNothing () {
-                    var deferred = Q.defer();
-                    return deferred.promise
+                    var deferred = new Promise();
+                    return deferred;
                 }
 
                 doNothing.then(function () {
@@ -90,3 +90,41 @@ section
     div An <i>unresolved</i> promise by definition is also <i>pending</i>.
     aside(class="notes").
         An unresolved promise is pending by necessity.
+section
+    div Promisifying Backbone Fetch
+    pre()
+        code.
+            var promiseCollection = Backbone.Collection.extend({
+                fetch: function(options) {
+                    var deferred = new Promise();
+
+                    var success = options.success;
+                    var error = options.error;
+                    if (success) {
+                        options.success = function() {
+                            deferred.resolve(success.apply(this, arguments));
+                        }
+                    }
+
+                    if (error) {
+                        options.success = function() {
+                            deferred.reject(success.apply(this, arguments));
+                        }
+                    }
+
+                    Backbone.Collection.prototype.call(this, options);
+
+                    return deferred;
+                }
+            });
+section
+    div Usage
+    pre()
+        code.
+            promiseCollection.fetch()
+            .then(function(collection) {
+                console.log('woot!');
+            })
+            .catch(function(err) {
+                console.log('oh geez oh no');
+            });
