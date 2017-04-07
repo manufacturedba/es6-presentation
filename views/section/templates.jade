@@ -1,0 +1,39 @@
+section
+  h4 Template Strings
+  section
+    pre()
+      code.
+        let str = 'hey
+        there
+        friend';
+    pre(class="fragment")
+      code.
+        let str = `yeah,
+        you work`
+  section
+    pre()
+      code.
+        let name = 'Rob';
+        let position = 'dev';
+        console.log('My name is ' + name + ' and I\'m a' + position + '.');
+    pre(class="fragment")
+      code.
+        let name = 'Rob';
+        let position = 'dev';
+        console.log(`My name is ${name} and I'm a ${position}.`);
+  section
+    pre()
+      code.
+        let low = 10;
+        let high = 100;
+        function tagTemplate(str, value) {
+          if (value > 80) {
+            return str[0] + 'high';
+          } elseif (value < 20) {
+            return str[0] + 'low';
+          } else {
+            return str[0] + 'just right';
+          }
+        }
+        console.log(tagTemplate`Your value is ${low}`);
+        console.log(tagTemplate`Your value is ${high}`);

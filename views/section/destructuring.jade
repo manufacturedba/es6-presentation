@@ -1,0 +1,52 @@
+section
+  h4 Objects
+  section
+    pre()
+      code.
+        let { foo } = { foo: 'bar' };
+  section
+    pre()
+      code.
+        let [ foo, bar, baz ] = [1, 2, 3];
+    pre(class="fragment")
+      code.
+        let [ foo, , baz ] = [1, 2, 3];
+  section
+    pre()
+      code.
+        function destructure({ foo, bar = 1, baz }) {
+          pass
+        }
+        destructure({ foo: 'spam', baz: 1});
+  section
+    pre()
+      code.
+        function destructure({ foo, bar = 1, baz }) {
+          pass
+        }
+        destructure({ foo: 'spam', baz: 1});
+  section
+    pre()
+      code.
+        let foo = 'bar';
+        let baz = {
+          foo: foo
+        }
+    pre(class="fragment")
+      code.
+        let foo = 'bar';
+        let baz = {
+          foo
+        }
+  section
+    pre()
+      code.
+        let bar = 'baz';
+        let foo = {};
+        foo[bar] = 'sucks';
+    pre(class="fragment")
+      code.
+        let bar = 'baz';
+        let foo = {
+          [bar]: 'great'
+        };

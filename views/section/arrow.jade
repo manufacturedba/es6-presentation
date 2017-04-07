@@ -1,0 +1,29 @@
+section
+  h4 Arrow Functions
+  section
+    pre()
+      code.
+        this.value = 1;
+        someFunction(a, b, function() {
+          console.log(this.value);
+        }.bind(this)) // <= Incredibly annoying
+    pre(class="fragment")
+      code.
+        this.value = 1;
+        someFunction(a, b, () {
+          console.log(this.value);
+        });
+  section
+    pre()
+      code.
+        this.bar = 1;
+        let foo = {
+          bar: 2,
+          baz: () => {
+            console.log(bar); // => 1
+          }
+        }
+  section
+    pre()
+      code.
+        [1, 2, 3].map(val => val + 1);

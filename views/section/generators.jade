@@ -1,0 +1,14 @@
+section
+  h4 Generators
+  section
+    pre()
+      code.
+        function* consoleGen(arr) {
+          let index = 0;
+          yield arr[index++];
+        }
+        let gen = consoleGen(['foo', 'bar', 'baz']);
+        console.log(gen.next().value); // => 'foo'
+        console.log(gen.next().value); // => 'bar'
+        console.log(gen.next().value); // => 'baz'
+        console.log(gen.next().done); // => true

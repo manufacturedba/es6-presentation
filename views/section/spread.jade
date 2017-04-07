@@ -1,0 +1,39 @@
+section
+  h4 Rest
+  section
+    pre()
+      code.
+        function defaults(obj) {
+          let myArgs = Array.prototype.slice.call(arguments, defaults.length);
+        }
+    pre(class="fragment")
+      code.
+        function defaults(obj, ...myArgs) {
+          console.log(myArgs.length);
+        }
+section
+  h4 Spread
+  section
+    pre()
+      code.
+        let foo = { a: 1, b: 2 };
+        let bar = { ...foo, b: 3 };
+  section
+    pre()
+      code.
+        function spread(a, b, c) {
+          return a + b + c;
+        }
+        spread(...[1, 2, 3]);
+  section
+    pre()
+      code.
+        let foo = [1, 2, 3];
+        let bar = [...foo, 4, 5, 6];
+  section
+    pre()
+      code.
+        let foo = [1, 2, 3];
+        let [bar, ...baz] = foo;
+        console.log(bar) // => 1
+        console.log(baz) // => [2, 3]
