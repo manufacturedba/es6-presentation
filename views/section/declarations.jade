@@ -1,0 +1,63 @@
+section
+    h4 Declarations
+section
+  h4 var
+  p Allows some funky stuff
+  section
+    pre()
+        code.
+            for (var i = 0; i <= 1; i++) {
+              console.log(i);
+            }
+            console.log(i);
+            0
+            1
+            1 // <- WTF?
+  section
+    pre()
+        code.
+            (function() {
+
+              foo = 'bar';
+
+            })()
+
+            console.log(foo);
+            foo // <- Forgot to "use strict"
+  section
+    pre()
+        code.
+            var foo = 'value';
+            // lots of code here
+            var foo = 'differentValue' // But why?
+section
+  h4 const
+  section
+    pre()
+      code.
+        const foo = 2;
+        foo = 3; // Error
+  section
+    pre()
+      code.
+        const foo = {};
+        foo.bar = 'spameggs'; // Totally fine.
+section
+  h4 let
+  section
+    pre()
+      code.
+        let foo = 'bar';
+        foo = 'baz'; // Reassignment is valid
+  section
+    pre()
+      code.
+        let foo = 'bar';
+        let foo = 'baz'; // Error, already declared
+  section
+    pre()
+      code.
+        for (let i = 0; i < 1; i++) {
+          pass
+        }
+        console.log(i) // Error
