@@ -1,2 +1,2 @@
-# q-class
-Slideshow presentation on Q Promise library and other promise good stuff
+# es6-presentation
+Presentation on ES6 Features
